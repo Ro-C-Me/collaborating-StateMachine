@@ -6,6 +6,8 @@ private:
 protected:
 	int state = 0;
 
+	virtual void step() = 0;
+
 public:
 
 	StateMachine();
@@ -14,6 +16,17 @@ public:
 
 	int nextStep();
 
-	virtual void step() = 0;
+};
 
+class Registry {
+
+private:
+	static const int MAX_NR_OF_MACHINES = 2;
+
+	int nrOfMachines = 0;
+	StateMachine* machines[MAX_NR_OF_MACHINES];
+
+public:
+	bool add(StateMachine* machine);
+	void nextStep();
 };
