@@ -8,7 +8,7 @@
 
 
 void StateMachine::waiting(int time) {
- this->waitUntil = millis() + long(1000);
+ this->waitUntil = millis() + long(time);
 }
 
 int StateMachine::nextStep() {
@@ -27,11 +27,17 @@ StateMachine::StateMachine() {
 
 class WaitMachine : public StateMachine {
 
+private:
+	int interval = 0;
+
 	public:
+	WaitMachine(int interval) {
+		this->interval = interval;
+	}
 
 	void step() override {
-		std::cout << "Waiting finished, will do again\n";
-		this->waiting(1000);
+		std::cout << std::string("Waiting finished, will do again(") + std::to_string(this->interval) + ")\n";
+		this->waiting(this->interval);
 	}
 };
 
@@ -40,10 +46,12 @@ class WaitMachine : public StateMachine {
 int main() {
 std::cout << "Hello, StateMachine\n";
 
- WaitMachine w;
+ WaitMachine w1(1000);
+ WaitMachine w2(5000);
 
  while (true) {
-	 w.nextStep();
+	 w1.nextStep();
+	 w2.nextStep();
  }
 
 return 0;
