@@ -3,6 +3,8 @@
 #ifdef testing
 #include <iostream>
 #include "Testing.hpp"
+#else
+#include <Arduino.h>
 #endif
 
 void StateMachine::waiting(int time) {
