@@ -1,22 +1,4 @@
-class StateMachine {
-
-private:
-	unsigned long waitUntil = 0;
-
-protected:
-	int state = 0;
-
-	virtual void step() = 0;
-
-public:
-
-	StateMachine();
-
-	void waiting(int time);
-
-	int nextStep();
-
-};
+class StateMachine;
 
 class Registry {
 
@@ -30,3 +12,29 @@ public:
 	bool add(StateMachine* machine);
 	void nextStep();
 };
+
+
+class StateMachine {
+
+private:
+	unsigned long waitUntil = 0;
+
+protected:
+
+	int state = 0;
+
+	virtual void step() = 0;
+
+public:
+
+	static Registry* registry;
+
+	StateMachine();
+
+	void waiting(int time);
+
+	int nextStep();
+
+};
+
+

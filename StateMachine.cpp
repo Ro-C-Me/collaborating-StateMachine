@@ -7,6 +7,9 @@
 #include <Arduino.h>
 #endif
 
+
+Registry* StateMachine::registry = new Registry();
+
 void StateMachine::waiting(int time) {
 	this->waitUntil = millis() + long(time);
 }
@@ -21,7 +24,13 @@ int StateMachine::nextStep() {
 
 StateMachine::StateMachine() {
 
+	if (StateMachine::registry == NULL) {
+		StateMachine::registry = new Registry();
+	}
+
+	StateMachine::registry->add(this);
 }
+
 
 bool Registry::add(StateMachine *machine) {
 
@@ -61,20 +70,14 @@ private:
 
 
 int main() {
-std::cout << "Hello, StateMachine\n";
 
  WaitMachine w1(1000);
  WaitMachine w2(5000);
- WaitMachine w3(5000);
-
- Registry registry;
-
- std::cout << std::to_string(registry.add(&w1)) + "\n";
- std::cout << std::to_string(registry.add(&w2)) + "\n";
- std::cout << std::to_string(registry.add(&w3)) + "\n";
+ WaitMachine w3(6000);
 
  while (true) {
-	registry.nextStep();
+	StateMachine::registry->nextStep();
+//	registry.nextStep();
  }
 
 return 0;
