@@ -31,6 +31,8 @@ public:
 
 	StateMachine();
 
+	virtual bool isAvailable() = 0;
+
 	void waiting(int time);
 
 	int nextStep();
