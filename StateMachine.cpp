@@ -9,16 +9,27 @@
 
 Registry *StateMachine::registry = new Registry();
 
-void StateMachine::waiting(int time) {
+void StateMachine::wait(int time) {
 	this->waitUntil = millis() + long(time);
 }
 
-int StateMachine::nextStep() {
-	if (this->waitUntil < millis()) {
-		this->step();
-	}
+void StateMachine::waitFor(StateMachine* machine) {
+	this->machineToWaitFor = machine;
+}
 
-	return this->state;
+void StateMachine::nextStep() {
+	if (this->waitUntil < millis()) {
+
+		if (this->machineToWaitFor == nullptr) {
+			this->step();
+		}
+		else {
+			if (this->machineToWaitFor->isAvailable()) {
+				this->machineToWaitFor = nullptr;
+				this->step();
+			}
+		}
+	}
 }
 
 StateMachine::StateMachine() {
@@ -71,7 +82,7 @@ private:
 		}
 
 		else {
-			this->waiting(this->interval);
+			this->wait(this->interval);
 			this->state = WAITING;
 		}
 	}
@@ -92,9 +103,8 @@ public:
 		}
 
 		void step() override {
-			if (this->toWaitFor->isAvailable()) {
-				std::cout << std::string("It's available\n");
-			}
+			std::cout << std::string("It's available\n");
+			this->waitFor(toWaitFor);
 		}
 
 		bool isAvailable() override {
@@ -109,7 +119,6 @@ int main() {
 
  while (true) {
 	StateMachine::registry->nextStep();
-//	registry.nextStep();
  }
 
 return 0;

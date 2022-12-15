@@ -19,6 +19,8 @@ class StateMachine {
 private:
 	unsigned long waitUntil = 0;
 
+	StateMachine* machineToWaitFor = nullptr;
+
 protected:
 
 	int state = 0;
@@ -33,9 +35,13 @@ public:
 
 	virtual bool isAvailable() = 0;
 
-	void waiting(int time);
+	void wait(int time);
 
-	int nextStep();
+	void waitFor(StateMachine* machine);
+
+	void nextStep();
+
+
 
 };
 
