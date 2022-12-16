@@ -9,27 +9,44 @@
 
 Registry *StateMachine::registry = new Registry();
 
-void StateMachine::wait(int time) {
+void StateMachine::wait(int time, int stateAfter) {
 	this->waitUntil = millis() + long(time);
+	this->stateAfterWaiting = stateAfter;
 }
 
-void StateMachine::waitFor(StateMachine* machine) {
+void StateMachine::waitFor(StateMachine* machine, int stateAfter) {
 	this->machineToWaitFor = machine;
+	this->stateAfterWaiting = stateAfter;
 }
+int nextStepsCalled = 0;
 
 void StateMachine::nextStep() {
-	if (this->waitUntil < millis()) {
+	nextStepsCalled++;
+	// waiting some time?
+	if (this->waitUntil > 0) {
+		// waiting finished?
+		unsigned long tmpWaitUntil = this->waitUntil;
+		unsigned long tmpMillis =  millis();
 
-		if (this->machineToWaitFor == nullptr) {
-			this->step();
-		}
-		else {
-			if (this->machineToWaitFor->isAvailable()) {
-				this->machineToWaitFor = nullptr;
-				this->step();
-			}
+		if (this->waitUntil < tmpMillis) {
+			this->waitUntil = 0;
+			this->state = this->stateAfterWaiting;
 		}
 	}
+
+	// waiting for a machine?
+	else if (this->machineToWaitFor) {
+		// machine available?
+		if (this->machineToWaitFor->isAvailable()) {
+			this->machineToWaitFor = nullptr;
+			this->state = this->stateAfterWaiting;
+			this->step();
+		}
+	} else {
+		// no waiting - just do it :D
+		this->step();
+	}
+
 }
 
 StateMachine::StateMachine() {
@@ -72,18 +89,17 @@ private:
 	public:
 	WaitMachine(int interval) {
 		this->interval = interval;
-		this->state = 2;
+		this->state = 1;
 	}
 
 	void step() override {
-		if (this->state == WAITING) {
-			std::cout << std::string("Waiting finished, will do again(") + std::to_string(this->interval) + ")\n";
-			this->state = FINISHED_WAITING;
-		}
-
-		else {
-			this->wait(this->interval);
+		if (this->state == FINISHED_WAITING) {
+			std::cout << std::string("Waiting finished\n");
 			this->state = WAITING;
+		}
+		else {
+			std::cout << std::string("Will wait again(") + std::to_string(this->interval) + ")\n";
+			this->wait(this->interval, FINISHED_WAITING);
 		}
 	}
 
@@ -104,7 +120,7 @@ public:
 
 		void step() override {
 			std::cout << std::string("It's available\n");
-			this->waitFor(toWaitFor);
+			this->waitFor(toWaitFor, this->state);
 		}
 
 		bool isAvailable() override {
