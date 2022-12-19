@@ -1,9 +1,12 @@
+#ifndef STATEMACHINE_HPP_
+#define STATEMACHINE_HPP_
+
 class StateMachine;
 
 class Registry {
 
 private:
-	static const int MAX_NR_OF_MACHINES = 2;
+	static const int MAX_NR_OF_MACHINES = 255;
 
 	int nrOfMachines = 0;
 	StateMachine* machines[MAX_NR_OF_MACHINES];
@@ -48,4 +51,4 @@ public:
 
 };
 
-
+#endif
