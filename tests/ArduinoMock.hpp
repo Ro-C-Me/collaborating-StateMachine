@@ -1,3 +1,4 @@
+#ifdef testing
 #include <chrono>
 #include <iostream>
 
@@ -44,3 +45,5 @@ static void pinMode(int pin, int mode) {
 	}
 	std::cout << std::string("pinMode: pin " + std::to_string(pin) + " -> " + s + "\n");
 }
+
+#endif

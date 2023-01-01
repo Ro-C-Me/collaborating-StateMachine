@@ -1,3 +1,4 @@
+#ifdef testing
 #include "ArduinoMock.hpp"
 
 #include "../StateMachine.hpp"
@@ -65,3 +66,4 @@ int main() {
 
 return 0;
 }
+#endif
