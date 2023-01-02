@@ -28,7 +28,7 @@ static void digitalWrite(int pin, int val) {
 	else {
 		s = "INVALID VALUE";
 	}
-	std::cout << std::string("digitalWrite: pin " + std::to_string(pin) + " -> " + s + "\n");
+	std::cout << millis() % 100000 << std::string(" digitalWrite: pin " + std::to_string(pin) + " -> " + s + "\n");
 }
 
 static void pinMode(int pin, int mode) {
