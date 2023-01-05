@@ -7,8 +7,6 @@
 #include <Arduino.h>
 #endif
 
-Registry *StateMachine::registry = new Registry();
-
 void StateMachine::wait(int time, int stateAfter) {
 	this->waitUntil = millis() + long(time);
 	this->stateAfterWaiting = stateAfter;
@@ -57,6 +55,8 @@ StateMachine::StateMachine() {
 
 	StateMachine::registry->add(this);
 }
+
+Registry *StateMachine::registry = new Registry();
 
 bool Registry::add(StateMachine *machine) {
 
