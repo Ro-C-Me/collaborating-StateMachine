@@ -7,6 +7,10 @@
 #include <Arduino.h>
 #endif
 
+#ifdef testing
+Registry *StateMachine::registry = new Registry();
+#endif
+
 void StateMachine::wait(int time, int stateAfter) {
 	this->waitUntil = millis() + long(time);
 	this->stateAfterWaiting = stateAfter;
@@ -55,8 +59,6 @@ StateMachine::StateMachine() {
 
 	StateMachine::registry->add(this);
 }
-
-Registry *StateMachine::registry = new Registry();
 
 bool Registry::add(StateMachine *machine) {
 
