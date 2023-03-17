@@ -51,9 +51,6 @@ void StateMachine::nextStep() {
 
 }
 
-void StateMachine::init() {}
-bool StateMachine::isAvailable() {return true;}
-
 StateMachine::StateMachine() {
 
 	if (StateMachine::registry == NULL) {
@@ -76,11 +73,5 @@ bool Registry::add(StateMachine *machine) {
 void Registry::nextStep() {
 	for (int i = 0; i < this->nrOfMachines; i++) {
 		this->machines[i]->nextStep();
-	}
-}
-
-void Registry::init() {
-	for (int i = 0; i < this->nrOfMachines; i++) {
-		this->machines[i]->init();
 	}
 }

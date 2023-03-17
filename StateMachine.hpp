@@ -13,10 +13,7 @@ private:
 
 public:
 	bool add(StateMachine* machine);
-
 	void nextStep();
-
-	void init();
 };
 
 
@@ -42,15 +39,15 @@ public:
 
 	StateMachine();
 
-	virtual bool isAvailable();
-
-	virtual void init();
+	virtual bool isAvailable() = 0;
 
 	void wait(int time, int stateAfter);
 
 	void waitFor(StateMachine* machine, int stateAfter);
 
 	void nextStep();
+
+
 
 };
 
