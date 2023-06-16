@@ -1,6 +1,8 @@
 #include "StateMachine.hpp"
 #include <Arduino.h>
 
+Registry *StateMachine::registry = new Registry();
+
 void StateMachine::wait(int time, int stateAfter) {
 	this->waitUntil = millis() + long(time);
 	this->stateAfterWaiting = stateAfter;
