@@ -10,17 +10,13 @@ void StateMachine::waitFor(StateMachine* machine, int stateAfter) {
 	this->machineToWaitFor = machine;
 	this->stateAfterWaiting = stateAfter;
 }
-int nextStepsCalled = 0;
 
 void StateMachine::nextStep() {
-	nextStepsCalled++;
+
 	// waiting some time?
 	if (this->waitUntil > 0) {
-		// waiting finished?
-		unsigned long tmpWaitUntil = this->waitUntil;
-		unsigned long tmpMillis =  millis();
 
-		if (this->waitUntil < tmpMillis) {
+		if (this->waitUntil < millis()) {
 			this->waitUntil = 0;
 			this->state = this->stateAfterWaiting;
 		}
