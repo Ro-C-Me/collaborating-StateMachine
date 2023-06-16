@@ -1,3 +1,7 @@
 /.project
 /.sproject
 /StateMachine.ino
+/.cproject
+/spec.d
+/sloeber.ino.cpp
+Release/
