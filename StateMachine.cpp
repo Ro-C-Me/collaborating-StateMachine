@@ -1,15 +1,5 @@
 #include "StateMachine.hpp"
-
-#ifdef testing
-#include <iostream>
-#include "tests/ArduinoMock.hpp"
-#else
 #include <Arduino.h>
-#endif
-
-#ifdef testing
-Registry *StateMachine::registry = new Registry();
-#endif
 
 void StateMachine::wait(int time, int stateAfter) {
 	this->waitUntil = millis() + long(time);
