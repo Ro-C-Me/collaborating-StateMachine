@@ -9,7 +9,7 @@ But keeping the current state (e.g. ON and OFF for the LED example) and the poss
 
 The registry will call the step() function of every StateMachine once in a loop() call. When implementing a StateMachine, you should keep the time required for a step() call as small as possible, because a delay in one StateMachine's step() will result in all other StateMachines being called later. Of course, delay() calls are a really bad idea, but there are many other things which can slow down the whole process like waiting for the Serial port etc. 
 
-Complete examples can be found in the examples section, I suggest to start with the blinking led.
+Complete examples can be found in the examples section, I suggest to start with the [blinking led](https://github.com/Ro-C-Me/waiting-StateMachine/blob/master/examples/blinking_led/blinking_led.ino).
 
 The StateMachine class provides to waiting functions:
 
