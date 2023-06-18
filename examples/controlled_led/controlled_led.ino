@@ -68,9 +68,10 @@ public:
 	}
 };
 
-void setup() {
 	LED led(13);
-	new LEDControl(&led);
+	LEDControl control(&led);
+
+void setup() {
 
 	StateMachine::registry->init();
 }
