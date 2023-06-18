@@ -21,6 +21,7 @@ void StateMachine::nextStep() {
 		if (this->waitUntil < millis()) {
 			this->waitUntil = 0;
 			this->state = this->stateAfterWaiting;
+			this->step();
 		}
 	}
 
