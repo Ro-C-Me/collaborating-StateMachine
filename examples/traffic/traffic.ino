@@ -124,7 +124,7 @@ public:
 //define our leds
 TrafficLight trafficlight(13, 14, 15);
 
-Cars(&trafficLight);
+Cars cars(&trafficlight);
 
 // initialize all known stateMachines
 void setup() {
